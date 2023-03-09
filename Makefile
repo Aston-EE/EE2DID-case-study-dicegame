@@ -1,7 +1,7 @@
 # Makefile for students level 5 VHDL laboratory work
 # using ghdl for vhdl simulation, gtkwave to view waveforms and vivado
-# to syntesise and generate bit files for an FPGA
-# (c) Dr. John A.R. Williams <j.a.r.williams@aston.ac.uk> 2018
+# to synthesise and generate bit files for an FPGA
+# Copyright 2017-2023 Aston University
 
 # The conventions assumed by this makefile are given below in help definition
 # below - just type `make` to see them. 
@@ -11,28 +11,21 @@
 # The rules assume the top level entity name matches it's vhdl filename
 # and that the xdc constraints filename
 
-# define the sources to be used here for bitfiloe or testbench targets
-# it is important for simulations that the testbench
-# sources in reverse heirarchical order
+# define the sources to be used here for bitfile or testbench targets
+# it is important for simulations that the sources are in reverse heirarchical
+# order i.e. later files have entities that depend on earlier ones.
 
+and_gate_testbench: and_gate.vhd and_gate_testbench.vhd
+and_gate.bit: and_gate.vhd
+full_adder_testbench: full_adder.vhd full_adder_testbench.vhd
+full_adder.bit: full_adder.vhd
 clk_prescaler_testbench: clk_prescaler.vhd clk_prescaler_testbench.vhd
-dice_testbench: counter.vhd dice.vhd dice_testbench.vhd
-compare_testbench: compare.vhd compare_testbench.vhd
-control_testbench: compare.vhd control.vhd control_testbench.vhd
-debounce_testbench: debounce.vhd debounce_testbench.vhd
+debounce_testbench: debounce.vhd clk_prescaler.vhd debounce_testbench.vhd
 counter_testbench: counter.vhd counter_testbench.vhd
-display_testbench: display.vhd display_testbench.vhd
-dice_testbench: counter.vhd dice.vhd dice_testbench.vhd
+fourcounter.bit: EE2IDD.vhd debounce.vhd clk_prescaler.vhd counter.vhd fourcounter.vhd
+fourcounter_testbench: clk_prescaler.vhd debounce.vhd counter.vhd fourcounter.vhd fourcounter_testbench.vhd
 
-counter_demo.bit: clk_prescaler.vhd counter.vhd counter_demo.vhd
-counter2_demo.bit: counter.vhd counter2_demo.vhd
-debounce_demo.bit: debounce.vhd clk_prescaler.vhd debounce_demo.vhd
-btn_push_testbench: clk_prescaler.vhd btn_push.vhd btn_push_testbench.vhd
-btn_push_demo.bit: btn_push_demo.vhd clk_prescaler.vhd btn_push.vhd
-display_demo.bit: display.vhd clk_prescaler.vhd display_demo.vhd
-
-craps.bit: clk_prescaler.vhd display.vhd debounce.vhd counter.vhd compare.vhd control.vhd dice.vhd craps.vhd
-
+include casestudy.mk
 
 #################################################################
 # Do not change anything below this line
@@ -84,7 +77,7 @@ $(TMPDIR)/%.o: %.vhd
 
 %.check:%.vhd
 	@mkdir -p $(TMPDIR)
-	ghdl -s $(GHDLFLAGS) $<
+	ghdl -a $(GHDLFLAGS) $<
 
 %_testbench:
 	@mkdir -p $(TMPDIR)
@@ -100,7 +93,7 @@ $(TMPDIR)/%.o: %.vhd
 
 .PHONY: clean
 clean:
-	@rm -fr $(TMPDIR) $(LOGDIR) tmp *~ *.o *_testbench *.bit *webtalk.* .Xil *.ghw submission.tar *.sav 
+	@rm -fr $(TMPDIR) $(LOGDIR) tmp *~ *.o *_testbench *webtalk.* .Xil *.ghw submission.tar *.sav 
 
 # Xilinx vivado synthesis rules
 
@@ -154,11 +147,10 @@ export PROGRAM_TCL
 	@echo "$$PROGRAM_TCL" | $(VIVADO) -log $(LOGDIR)/$*_prog.log -nojournal -tempDir $(TMPDIR) -mode tcl
 	@rm -fr *.jou *webtalk.* .Xil
 
-# submission recording rules
-%.tar:
+
+.PHONY: submission.tar
+submission.tar:
 	@echo `date` $$USER `hostname` > submission.txt
-	@tar -cf $@ *.vhd *.xdc Makefile $(LOGDIR) submission.txt
+	@tar -cf --exclude submission.tar $@ *
 	@rm submission.txt
-	@(if ls *.bit ; then tar -rf $@ *.bit; fi)
-	@(if ls *.ghw ; then tar -rf $@ *.ghw; fi)
 	@echo "File $@ created. Upload this file to Blackboard assignment."
