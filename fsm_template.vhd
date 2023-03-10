@@ -1,5 +1,6 @@
 -- A three process finite state machine design in VHDL as per Xilinx
 -- recommendations
+-- Copyright 2017-2023 Aston University
 
 library IEEE;
 use IEEE.std_logic_1164.all;
