@@ -39,7 +39,7 @@ VIVADO = $(shell (find /opt/Xilinx/ -name vivado -type f -executable || find /us
 
 # FPGA partnumber for Basys 3 board
 PARTNUMBER=xc7a35tcpg236-1 
-GHDLFLAGS=--workdir=$(TMPDIR)/
+GHDLFLAGS=--std=08 --workdir=$(TMPDIR)/
 USERID=$(shell echo -n $$USER | md5sum | cut -c1-8)
 
 TESTBENCHES=$(wildcard *_testbench.vhd)
