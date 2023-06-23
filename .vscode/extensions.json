@@ -1,0 +1,26 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=827846
+	// for the documentation about the extensions.json format
+	"recommendations": [
+        "marus25.cortex-debug",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cpptools-themes",
+        "ms-vscode.makefile-tool",
+        "github.classroom",
+        "GitHub.vscode-pull-request-github",
+        "matepek.vscode-catch2-test-adapter",
+        "twxs.cmake",
+        "hbenl.vscode-test-explorer",
+        "fredericbonnet.cmake-test-adapter",
+        "mcu-debug.debug-tracker-vscode",
+        "mcu-debug.memory-view",
+        "mcu-debug.rtos-views",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.isort",
+        "littlefoxteam.vscode-python-test-adapter",
+        "puorc.awesome-vhdl"
+	]
+}

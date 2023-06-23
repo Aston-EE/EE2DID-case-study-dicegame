@@ -35,7 +35,7 @@ export TMPDIR=tmp
 export LOGDIR=log
 
 # Path to Xilinx Vivado binary
-VIVADO = $(shell (find /opt/Xilinx/ -name vivado -type f -executable || find /usr/local/Xilinx/ -name vivado -type f -executable) | grep 'bin/vivado')
+VIVADO = $(shell (find /tools/Xilinx/ -name vivado -type f -executable || find /opt/Xilinx/ -name vivado -type f -executable || find /usr/local/Xilinx/ -name vivado -type f -executable) | grep 'bin/vivado')
 
 # FPGA partnumber for Basys 3 board
 PARTNUMBER=xc7a35tcpg236-1 

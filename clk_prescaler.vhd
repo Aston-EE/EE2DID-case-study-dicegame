@@ -34,4 +34,3 @@ begin
    -- value, otherwise it should be 0
   end process;
 end behavioural;
-
