@@ -1,0 +1,11 @@
+{
+    "terminal.integrated.env.linux": {
+        "GTK_PATH": null,
+        "GTK_EXE_PREFIX": null,
+        "GTK_IM_MODULE": null,
+        "GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG": null,
+        "GTK_PATH_VSCODE_SNAP_ORIG": null,
+        "GTK_EXE_PREFIX_VSCODE_SNAP_ORIG": null,
+        "GTK_IM_MODULE_FILE": null
+    }
+}
